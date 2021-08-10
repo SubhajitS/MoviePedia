@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Entities.Repositories
 {
     public interface IMoviesRepository
     {
-        Task<MoviesAggregate> GetMovies();
+        Task<IEnumerable<Movie>> GetMovies();
     }
 }
