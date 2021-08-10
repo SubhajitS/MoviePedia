@@ -13,7 +13,7 @@ namespace Entities
         public IEnumerable<string> Stills { get; set; }
         public string Title { get; set; }
         public string ListingType { get; set; }
-        public decimal Rating { get; set; }
-        public string ID { get; set; }
+        public double ImdbRating { get; set; }
+        public string ImdbID { get; set; }
     }
 }

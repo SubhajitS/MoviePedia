@@ -12,18 +12,18 @@ namespace Entities
             LoadAllMovies();
         }
 
-        public IEnumerable<Movie> AllMovies { get; private set; }
+        public IEnumerable<Movie> Movies { get; private set; }
 
         public IEnumerable<Movie> GetMoviesByTitle(string title)
         {
             title = title.Trim();
             if (string.IsNullOrEmpty(title))
-                return AllMovies;
-            return AllMovies.Where(x => string.Equals(x.Title, title, StringComparison.OrdinalIgnoreCase)).
+                return Movies;
+            return Movies.Where(x => string.Equals(x.Title, title, StringComparison.OrdinalIgnoreCase)).
                 Select(x => new Movie()
                 {
                     Title = x.Title,
-                    ID = x.ID,
+                    ImdbID = x.ImdbID,
                     ListingType = x.ListingType,
                     Language = x.Language,
                     Location = x.Location
@@ -35,12 +35,12 @@ namespace Entities
             language = language.Trim();
             location = location.Trim();
 
-            return AllMovies.Where(x => string.Equals(x.Language, language, StringComparison.OrdinalIgnoreCase) ||
+            return Movies.Where(x => string.Equals(x.Language, language, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(x.Location, location, StringComparison.OrdinalIgnoreCase)).
                 Select(x => new Movie()
                 {
                     Title = x.Title,
-                    ID = x.ID,
+                    ImdbID = x.ImdbID,
                     ListingType = x.ListingType,
                     Language = x.Language,
                     Location = x.Location
@@ -49,7 +49,7 @@ namespace Entities
 
         private void LoadAllMovies()
         {
-            AllMovies = new List<Movie>();
+            Movies = new List<Movie>();
         }
     }
 }

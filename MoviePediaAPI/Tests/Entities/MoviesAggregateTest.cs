@@ -9,8 +9,8 @@ namespace Tests
         public void LoadAllMovies()
         {
             var MA = new MoviesAggregate();
-            Assert.NotNull(MA.AllMovies);
-            Assert.Empty(MA.AllMovies);
+            Assert.NotNull(MA.Movies);
+            Assert.Empty(MA.Movies);
         }
 
         [Fact]
