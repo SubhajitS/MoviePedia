@@ -26,7 +26,7 @@ namespace MoviePediaAPI.Controllers
             return Ok(allMovies);
         }
 
-        [HttpGet("/{ID}")]
+        [HttpGet("{ID}")]
         [ProducesResponseType(typeof(Movie), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> ByID(string ID)
@@ -37,7 +37,7 @@ namespace MoviePediaAPI.Controllers
             return Ok(movie);
         }
 
-        [HttpGet("/Search")]
+        [HttpGet("Search")]
         [ProducesResponseType(typeof(IEnumerable<Movie>), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> ByTitle([FromQuery]string Title)
@@ -48,7 +48,7 @@ namespace MoviePediaAPI.Controllers
             return Ok(movies);
         }
 
-        [HttpGet("/Filter")]
+        [HttpGet("Filter")]
         [ProducesResponseType(typeof(IEnumerable<Movie>), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> ByTitle([FromQuery] string Language, [FromQuery] string Location)

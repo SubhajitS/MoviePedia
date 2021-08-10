@@ -12,7 +12,7 @@ namespace Persistance
     public class MoviesRepository : IMoviesRepository
     {
         private readonly IConfiguration _configuration;
-        private const string _jsonPath = "Path";
+        private const string _jsonPath = "JSONPath";
         public MoviesRepository(IConfiguration configuration)
         {
             _configuration = configuration;
