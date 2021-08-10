@@ -233,5 +233,54 @@ namespace Tests
             Assert.NotNull(filterMovies);
             Assert.Equal(3, filterMovies.Count());
         }
+
+        [Fact]
+        public async Task GetMovieReturnsIfIDMatches()
+        {
+            repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
+            {
+                new Movie()
+                {
+                    Title = "The first one",
+                    ImdbID = "imdb1",
+                    Location = "Kolkata",
+                    Language = "Bengali"
+                },
+                new Movie()
+                {
+                    Title = "Just by a whisker",
+                    ImdbID = "imdb2",
+                    Location = "Kolkata",
+                    Language = "Hindi"
+                }
+            });
+            var movieDetail = await MA.GetMovie("IMDB1");
+            Assert.NotNull(movieDetail);
+            Assert.Equal("The first one", movieDetail.Title);
+        }
+
+        [Fact]
+        public async Task GetMovieReturnsNullIfIDDoesnotMatche()
+        {
+            repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
+            {
+                new Movie()
+                {
+                    Title = "The first one",
+                    ImdbID = "imdb1",
+                    Location = "Kolkata",
+                    Language = "Bengali"
+                },
+                new Movie()
+                {
+                    Title = "Just by a whisker",
+                    ImdbID = "imdb2",
+                    Location = "Kolkata",
+                    Language = "Hindi"
+                }
+            });
+            var movieDetail = await MA.GetMovie("IMDB10");
+            Assert.Null(movieDetail);
+        }
     }
 }

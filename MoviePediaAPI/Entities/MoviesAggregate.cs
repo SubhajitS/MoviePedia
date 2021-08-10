@@ -23,7 +23,7 @@ namespace Entities
             title = title.Trim();
             if (string.IsNullOrEmpty(title))
                 return Movies;
-            return Movies.Where(x => string.Equals(x.Title, title, StringComparison.OrdinalIgnoreCase)).
+            return Movies.Where(x => x.Title.ToLower().Contains(title.ToLower())).
                 Select(x => new Movie()
                 {
                     Title = x.Title,
@@ -58,6 +58,13 @@ namespace Entities
         {
             this.Movies = await _moviesRepository.GetMovies();
             return this.Movies;
+        }
+
+        public async Task<Movie> GetMovie(string id)
+        {
+            if (Movies == null)
+                await this.GetAllMovies();
+            return Movies.FirstOrDefault(x => string.Equals(x.ImdbID, id, StringComparison.OrdinalIgnoreCase));                
         }
     }
 }
