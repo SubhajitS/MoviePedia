@@ -126,6 +126,31 @@ namespace Tests
         }
 
         [Fact]
+        public async Task FilterMoviesByTitleReturnsAllIfTitleIsNull()
+        {
+            repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
+            {
+                new Movie()
+                {
+                    Title = "The first one",
+                    ImdbID = "imdb1",
+                    Location = "Kolkata",
+                    Language = "Bengali"
+                },
+                new Movie()
+                {
+                    Title = "Just by a whisker",
+                    ImdbID = "imdb2",
+                    Location = "Kolkata",
+                    Language = "Hindi"
+                }
+            });
+            var filterMovies = await MA.GetMoviesByTitle(null);
+            Assert.NotNull(filterMovies);
+            Assert.Equal(2, filterMovies.Count());
+        }
+
+        [Fact]
         public async Task FilterMoviesDoesNotReturnIfMismatch()
         {
             repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
@@ -148,6 +173,31 @@ namespace Tests
             var filterMovies = await MA.GetFilteredMovies("English", "Pune");
             Assert.NotNull(filterMovies);
             Assert.Empty(filterMovies);
+        }
+
+        [Fact]
+        public async Task FilterMoviesReturnsAllIfLocationAndLanguageAreNull()
+        {
+            repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
+            {
+                new Movie()
+                {
+                    Title = "The first one",
+                    ImdbID = "imdb1",
+                    Location = "Kolkata",
+                    Language = "Bengali"
+                },
+                new Movie()
+                {
+                    Title = "Just by a whisker",
+                    ImdbID = "imdb2",
+                    Location = "Kolkata",
+                    Language = "Hindi"
+                }
+            });
+            var filterMovies = await MA.GetFilteredMovies(null, null);
+            Assert.NotNull(filterMovies);
+            Assert.Equal(2, filterMovies.Count());
         }
 
         [Fact]
@@ -177,6 +227,32 @@ namespace Tests
         }
 
         [Fact]
+        public async Task FilterMoviesReturnsIfOnlyLanguageMatchesAndLocationIsNull()
+        {
+            repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
+            {
+                new Movie()
+                {
+                    Title = "The first one",
+                    ImdbID = "imdb1",
+                    Location = "Kolkata",
+                    Language = "Bengali"
+                },
+                new Movie()
+                {
+                    Title = "Just by a whisker",
+                    ImdbID = "imdb2",
+                    Location = "Kolkata",
+                    Language = "Hindi"
+                }
+            });
+            var filterMovies = await MA.GetFilteredMovies("Bengali", null);
+            Assert.NotNull(filterMovies);
+            Assert.Single(filterMovies);
+            Assert.Equal("The first one", filterMovies.First().Title);
+        }
+
+        [Fact]
         public async Task FilterMoviesReturnsIfOnlyLocationMatches()
         {
             repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
@@ -197,6 +273,32 @@ namespace Tests
                 }
             });
             var filterMovies = await MA.GetFilteredMovies("English", "Kolkata");
+            Assert.NotNull(filterMovies);
+            Assert.Equal(2, filterMovies.Count());
+            Assert.Equal("Just by a whisker", filterMovies.Last().Title);
+        }
+
+        [Fact]
+        public async Task FilterMoviesReturnsIfOnlyLocationMatchesButLanguageIsNUll()
+        {
+            repo.Setup(x => x.GetMovies()).ReturnsAsync(new List<Movie>
+            {
+                new Movie()
+                {
+                    Title = "The first one",
+                    ImdbID = "imdb1",
+                    Location = "Kolkata",
+                    Language = "Bengali"
+                },
+                new Movie()
+                {
+                    Title = "Just by a whisker",
+                    ImdbID = "imdb2",
+                    Location = "Kolkata",
+                    Language = "Hindi"
+                }
+            });
+            var filterMovies = await MA.GetFilteredMovies(null, "Kolkata");
             Assert.NotNull(filterMovies);
             Assert.Equal(2, filterMovies.Count());
             Assert.Equal("Just by a whisker", filterMovies.Last().Title);

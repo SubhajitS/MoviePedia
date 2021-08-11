@@ -20,9 +20,10 @@ namespace Entities
         {
             if (Movies == null)
                 await this.GetAllMovies();
-            title = title.Trim();
+            
             if (string.IsNullOrEmpty(title))
                 return Movies;
+            title = title.Trim();
             return Movies.Where(x => x.Title.ToLower().Contains(title.ToLower())).
                 Select(x => new Movie()
                 {
@@ -36,11 +37,16 @@ namespace Entities
 
         public async Task<IEnumerable<Movie>> GetFilteredMovies(string language, string location)
         {
-            language = language.Trim();
-            location = location.Trim();
-
             if (Movies == null)
                 await this.GetAllMovies();
+
+            if (!string.IsNullOrEmpty(language))
+                language = language.Trim();
+            if (!string.IsNullOrEmpty(location))
+                location = location.Trim();
+
+            if (string.IsNullOrEmpty(language) && string.IsNullOrEmpty(location))
+                return Movies;            
 
             return Movies.Where(x => string.Equals(x.Language, language, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(x.Location, location, StringComparison.OrdinalIgnoreCase)).
