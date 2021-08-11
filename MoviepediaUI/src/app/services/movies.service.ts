@@ -17,11 +17,15 @@ export class MoviesService {
   }
 
   filterMovies(language: string, location: string): Observable<Array<Movie>> {
-    const param = new HttpParams().append('language', language === 'All' ? '' : language).append('location', location === 'All' ? '' : location);
+    const param = new HttpParams().append('language', (!language || language === 'All') ? '' : language)
+      .append('location', (!location || location === 'All') ? '' : location);
     return this.httpClient.get<Array<Movie>>(`${environment.endpoint}movies/filter`, { params: param });
   }
 
   getMovie(id: string): Observable<Movie> {
+    if (!id)
+      throw new Error('id cannot be null or undefined');
+
     return this.httpClient.get<Movie>(`${environment.endpoint}movies/${id}`);
   }
 }
