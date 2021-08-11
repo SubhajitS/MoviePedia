@@ -3,10 +3,24 @@
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Search Movies</mat-label>
             <input matInput placeholder="The Shawshank Redemption" name="title" [(ngModel)]="title">
-        </mat-form-field>
+        </mat-form-field>        
     </div>
     <div class="mx-auto pb-2">
         <button mat-raised-button color="primary" (click)="searchByTitle()">Search</button>
+    </div>
+    <div class="mx-auto pb-2">
+        <mat-form-field appearance="fill">
+            <mat-label>Language</mat-label>
+            <select matNativeControl name="language" [(ngModel)]="selectedLanguage" (change)="change()">
+                <option *ngFor="let language of distinctLanguages" [value]="language">{{language}}</option>
+            </select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Location</mat-label>
+            <select matNativeControl name="location" [(ngModel)]="selectedLocation" (change)="change()">
+                <option *ngFor="let location of distinctLocations" [value]="location">{{location}}</option>
+            </select>
+        </mat-form-field>
     </div>
     <div class="mx-auto">
         <table mat-table [dataSource]="movies" matSort class="mat-elevation-z8">

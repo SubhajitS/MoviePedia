@@ -48,8 +48,8 @@ namespace Entities
             if (string.IsNullOrEmpty(language) && string.IsNullOrEmpty(location))
                 return Movies;            
 
-            return Movies.Where(x => string.Equals(x.Language, language, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(x.Location, location, StringComparison.OrdinalIgnoreCase)).
+            return Movies.Where(x => (string.IsNullOrEmpty(language) || string.Equals(x.Language, language, StringComparison.OrdinalIgnoreCase)) &&
+                (string.IsNullOrEmpty(location) || string.Equals(x.Location, location, StringComparison.OrdinalIgnoreCase))).
                 Select(x => new Movie()
                 {
                     Title = x.Title,

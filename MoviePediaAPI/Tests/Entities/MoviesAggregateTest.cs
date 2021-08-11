@@ -220,7 +220,7 @@ namespace Tests
                     Language = "Hindi"
                 }
             });
-            var filterMovies = await MA.GetFilteredMovies("Bengali", "Pune");
+            var filterMovies = await MA.GetFilteredMovies("Bengali", "");
             Assert.NotNull(filterMovies);
             Assert.Single(filterMovies);
             Assert.Equal("The first one", filterMovies.First().Title);
@@ -272,7 +272,7 @@ namespace Tests
                     Language = "Hindi"
                 }
             });
-            var filterMovies = await MA.GetFilteredMovies("English", "Kolkata");
+            var filterMovies = await MA.GetFilteredMovies("", "Kolkata");
             Assert.NotNull(filterMovies);
             Assert.Equal(2, filterMovies.Count());
             Assert.Equal("Just by a whisker", filterMovies.Last().Title);
@@ -333,7 +333,7 @@ namespace Tests
             });
             var filterMovies = await MA.GetFilteredMovies("Hindi", "Kolkata");
             Assert.NotNull(filterMovies);
-            Assert.Equal(3, filterMovies.Count());
+            Assert.Single(filterMovies);
         }
 
         [Fact]

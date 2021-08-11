@@ -16,7 +16,11 @@ export class MoviesComponent implements OnInit {
 
   title: string;
   movies: MatTableDataSource<Movie>;
-  displayedColumns: string[] = ['title', 'listingType','language','location'];
+  displayedColumns: string[] = ['title', 'listingType', 'language', 'location'];
+  distinctLanguages: string[] = ['All'];
+  distinctLocations: string[] = ['All'];
+  selectedLanguage: string = 'All';
+  selectedLocation: string = 'All';
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -32,9 +36,18 @@ export class MoviesComponent implements OnInit {
     this.router.navigate(['movies', selectedMovie.imdbID]);
   }
 
+  change() {
+    this.movieSvc.filterMovies(this.selectedLanguage, this.selectedLocation).subscribe(x => {
+      this.movies = new MatTableDataSource<Movie>(x);
+      this.movies.sort = this.sort;
+    });
+  }
+
   private GetMovies() {
     this.movieSvc.searchMovies(this.title).subscribe(x => {
       this.movies = new MatTableDataSource<Movie>(x);
+      this.distinctLocations = ['All', ...x.map(x => x.location).filter((v, i, s) => s.indexOf(v) === i)];
+      this.distinctLanguages = ['All', ...x.map(x => x.language).filter((v, i, s) => s.indexOf(v) === i)];
       this.movies.sort = this.sort;
     });
   }
