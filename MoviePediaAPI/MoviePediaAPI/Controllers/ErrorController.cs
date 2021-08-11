@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace MoviePediaAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ErrorController : ControllerBase
     {
