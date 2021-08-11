@@ -9,6 +9,7 @@ namespace MoviePediaAPI
 {
     public class Startup
     {
+        private const string AllowSpecificOrigins = "Allowed-Origins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +33,15 @@ namespace MoviePediaAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder =>
+            {
+                builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .WithOrigins(Configuration.GetValue<string>(AllowSpecificOrigins));
+                builder.AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            });
 
             app.UseAuthorization();
 
