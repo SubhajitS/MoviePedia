@@ -1,1 +1,23 @@
-<p>movie-details works!</p>
+<section class="col-lg-6 mx-auto" *ngIf="movie;else NotFound">
+    <h2>{{movie.title}}</h2>
+    <div>
+        <img [src]="movie.poster" />
+    </div>
+    <small>{{movie.plot}}</small>
+    <div class="rating mt-2 mb-2">Rating: {{movie.imdbRating}}</div>
+    <div class="mb-3">
+        <img [src]="img" width="300" *ngFor="let img of movie.stills" />
+    </div>
+    <div class="sounds">
+        <span>Sound Effects</span>
+        <ul>
+            <li *ngFor="let s of movie.soundEffects">{{s}}</li>
+        </ul>
+    </div>
+</section>
+<ng-template #NotFound>
+    <h3>Searched Movie is not available</h3>
+</ng-template>
+<div class="mx-auto pt-2">
+    <button mat-raised-button color="secondary" (click)="back()">Back</button>
+</div>

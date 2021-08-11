@@ -1,0 +1,13 @@
+.rating {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.sounds {
+    > span {
+        font-weight: 600;
+    }
+    > ul {
+        list-style: none;
+        padding-left: 0;
+    }
+}

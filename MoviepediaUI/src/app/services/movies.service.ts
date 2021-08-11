@@ -15,4 +15,8 @@ export class MoviesService {
     const param = new HttpParams().append('title', title??'');
     return this.httpClient.get<Array<Movie>>(`${environment.endpoint}movies/search`, { params: param });
   }
+
+  getMovie(id: string): Observable<Movie> {
+    return this.httpClient.get<Movie>(`${environment.endpoint}movies/${id}`);
+  }
 }
