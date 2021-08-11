@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Movie } from '../entities/movie';
 import { MoviesService } from '../services/movies.service';
 
@@ -11,7 +12,7 @@ import { MoviesService } from '../services/movies.service';
 })
 export class MoviesComponent implements OnInit {
 
-  constructor(private movieSvc: MoviesService) { }
+  constructor(private movieSvc: MoviesService, private router: Router) { }
 
   title: string;
   movies: MatTableDataSource<Movie>;
@@ -25,6 +26,10 @@ export class MoviesComponent implements OnInit {
 
   searchByTitle() {
     this.GetMovies();
+  }
+
+  showDetail(selectedMovie: Movie) {
+    this.router.navigate(['movies', selectedMovie.imdbID]);
   }
 
   private GetMovies() {
